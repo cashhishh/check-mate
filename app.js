@@ -20,7 +20,7 @@ app.use((err, req, res, next) => {
 
 app.use(
   cors({
-    origin: "https://your-netlify-app.netlify.app", // your Netlify URL
+    origin: "https://teal-kleicha-62f340.netlify.app/",
   })
 );
 app.use(express.json());
