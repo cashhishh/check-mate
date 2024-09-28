@@ -6,24 +6,22 @@ const authRoutes = require("./routes/auth");
 const todoRoutes = require("./routes/list");
 
 const app = express();
-
+app.use(express.json());
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
+app.use(
+  cors({
+    origin: "https://teal-kleicha-62f340.netlify.app/",
+  })
+);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
     .status(err.status || 500)
     .json({ message: err.message || "Internal Server Error" });
 });
-
-app.use(
-  cors({
-    origin: "https://your-netlify-app.netlify.app", // your Netlify URL
-  })
-);
-app.use(express.json());
 
 const startServer = async () => {
   try {
