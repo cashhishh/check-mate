@@ -18,7 +18,11 @@ app.use((err, req, res, next) => {
     .json({ message: err.message || "Internal Server Error" });
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://your-netlify-app.netlify.app", // your Netlify URL
+  })
+);
 app.use(express.json());
 
 const startServer = async () => {
