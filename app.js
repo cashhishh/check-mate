@@ -23,6 +23,16 @@ app.use((err, req, res, next) => {
     .json({ message: err.message || "Internal Server Error" });
 });
 
+<<<<<<< HEAD
+=======
+app.use(
+  cors({
+    origin: "https://teal-kleicha-62f340.netlify.app/",
+  })
+);
+app.use(express.json());
+
+>>>>>>> 63cba0fa66cc43878b45b70f784225cae607d162
 const startServer = async () => {
   try {
     console.log("Connecting to MongoDB URI:", process.env.MONGODB_URI);
