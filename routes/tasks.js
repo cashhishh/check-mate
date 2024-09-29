@@ -1,15 +1,15 @@
 const express = require("express");
 const List = require("../models/list");
-const { authenticate } = require("../middleware/auth");
+const authMiddleware = require("../middleware/auth");
 const router = express.Router();
 
 // Middleware to authenticate JWT
-router.use(authenticate);
+router.use(authMiddleware);
 
 // Add Task
 router.post("/addTask", async (req, res) => {
   const { title, body } = req.body;
-  const userId = req.userId;
+  const userId = req.userId; // This should be set in the auth middleware
 
   if (!title || !body) {
     return res.status(400).json({ message: "Title and body are required." });
@@ -43,7 +43,7 @@ router.put("/updateTask/:id", async (req, res) => {
     const task = await List.findByIdAndUpdate(
       id,
       { title, body, completed },
-      { new: true, runValidators: true } // Add runValidators for validation
+      { new: true, runValidators: true }
     );
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
