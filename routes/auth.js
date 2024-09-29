@@ -1,9 +1,7 @@
-// routes/auth.js
 const router = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
-// Signup Route
 router.post("/register", async (req, res) => {
   try {
     const { email, username, password } = req.body;
@@ -21,7 +19,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Signin Route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
