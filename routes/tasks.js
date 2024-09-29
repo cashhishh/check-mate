@@ -43,8 +43,11 @@ router.put("/updateTask/:id", async (req, res) => {
     const task = await List.findByIdAndUpdate(
       id,
       { title, body, completed },
-      { new: true }
+      { new: true, runValidators: true } // Add runValidators for validation
     );
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
     res.json(task);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -56,9 +59,13 @@ router.delete("/deleteTask/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    await List.findByIdAndDelete(id);
-    res.status(204).send();
+    const deletedTask = await List.findByIdAndDelete(id);
+    if (!deletedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    res.json({ message: "Task deleted successfully", deletedTask });
   } catch (error) {
+    console.error("Error deleting task:", error);
     res.status(500).json({ message: error.message });
   }
 });
